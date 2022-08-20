@@ -1,0 +1,94 @@
+﻿<!-- Layout -->
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Dynamisk titel -->
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="~/css/styles.css">
+    <link rel="icon" type="image/x-icon" href="~/images/favicon.ico" />
+</head>
+
+<body>
+    <div id="page-wrapper">
+        <!-- Sidhuvud -->
+        <header>
+            <div id="header-wrapper">
+                <!-- Logotyp -->
+                <a href="http://localhost:3000" id="logo" role="button" aria-label="Länk till startsidan">
+                    <img src="~/images/logo.jpg" alt="Mentabilitys logotyp" />
+                </a>
+                <div id="header-right">
+                    <!-- Sökfunktion -->
+                    <form id="search" action="index.html" method="post">
+                        <label for="search-bar">Sök</label>
+                        <input id="search-bar" type="search">
+                        <input id="search-btn" class="button" type="submit" value="Sök">
+                    </form>
+                    <!-- Hamburgerikon -->
+                    <div id="nav-icon" role="button" aria-label="Hamburgerikon" aria-expanded="false">
+                        <div id="bar1" class="bar"></div>
+                        <div id="bar2" class="bar"></div>
+                        <div id="bar3" class="bar"></div>
+                    </div>
+                    <!-- Huvudmeny desktop. Länkarna leder till React-webbplatsen, därav inga tag helpers -->
+                    <nav id="main-nav-desktop" class="main-nav">
+                        <ul>
+                            <li><a class="navlink" href="http://localhost:3000">Start</a></li>
+                            <li><a class="navlink" href="http://localhost:3000/#about">Om oss</a></li>
+                            <li><a class="navlink" href="http://localhost:3000/#news">Nyheter</a></li>
+                            <li><a class="navlink" href="http://localhost:3000/#activities">Aktiviteter</a></li>
+                            <li><a class="navlink" href="http://localhost:3000/#contact">Kontakt</a></li>
+                        </ul>
+                    </nav>
+                </div>
+                <!-- Huvudmeny mobil. Länkarna leder till React-webbplatsen, därav inga tag helpers -->
+                <nav id="main-nav-mobile" class="main-nav">
+                    <ul>
+                        <li><a class="navlink" href="http://localhost:3000">Start</a></li>
+                        <li><a class="navlink" href="http://localhost:3000/#about">Om oss</a></li>
+                        <li><a class="navlink" href="http://localhost:3000/#news">Nyheter</a></li>
+                        <li><a class="navlink" href="http://localhost:3000/#activities">Aktiviteter</a></li>
+                        <li><a class="navlink" href="http://localhost:3000/#contact">Kontakt</a></li>
+                        <li><a id="close-menu-link" class="navlink" href="#">Stäng</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </header>
+
+        <!-- Innehåll -->
+        <main>
+            @RenderBody();
+        </main>
+
+        @RenderSection("scripts", required: false)
+
+        <!-- Sidfot -->
+        <footer>
+            <div id="footer-wrapper">
+                <!-- Sidfotsnavigation-->
+                <nav id="footer-nav">
+                    <ul>
+                        <li><a class="navlink" href="http://localhost:3000">Start</a></li>
+                        <li><a class="navlink" href="http://localhost:3000/#about">Om oss</a></li>
+                        <li><a class="navlink" href="http://localhost:3000/#news">Nyheter</a></li>
+                        <li><a class="navlink" href="http://localhost:3000/#activities">Aktiviteter</a></li>
+                        <li><a class="navlink" href="http://localhost:3000/#contact">Kontakt</a></li>
+                    </ul>
+                </nav>
+                <!-- Kontaktuppgifter -->
+                <ul id="contact">
+                    <li>0155-123 45</li>
+                    <li><a id="email-link" href="mailto:info@foretaget.se">info@mentability.se</a></li>
+                    <li>Drottninggatan 1</li>
+                    <li>123 45 Grönköping</li>
+                </ul>
+            </div>
+        </footer>
+    </div>
+    <script src="~/js/main.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,24 @@
+﻿<!-- Utloggning och tillbaka till Admin, partial -->
+<div class="gray-section">
+    <div id="logout-wrapper">
+        @if (ViewData["Title"] == "Redigera | Nyheter")
+        {
+            <p id="back-to-admin"><a asp-controller="NewsArticle" asp-action="NewsArticle" id="back-to-admin-link">Tillbaka</a></p>
+            <p id="logout"><a asp-controller="EditNewsArticle" asp-action="Logout" id="logout-link">Logga ut</a></p>
+        }
+        else if (ViewData["Title"] == "Redigera | Aktiviteter")
+        {
+            <p id="back-to-admin"><a asp-controller="Activity" asp-action="Activity" id="back-to-admin-link">Tillbaka</a></p>
+            <p id="logout"><a asp-controller="EditActivity" asp-action="Logout" id="logout-link">Logga ut</a></p>
+        }
+        else if (ViewData["Title"] == "Redigera | Citat")
+        {
+            <p id="back-to-admin"><a asp-controller="Quote" asp-action="Quote" id="back-to-admin-link">Tillbaka</a></p>
+            <p id="logout"><a asp-controller="EditQuote" asp-action="Logout" id="logout-link">Logga ut</a></p>
+        }
+        else
+        {
+            <p id="logout"><a asp-controller="NewsArticle" asp-action="Logout" id="logout-link">Logga ut</a></p>
+        }
+    </div>
+</div>

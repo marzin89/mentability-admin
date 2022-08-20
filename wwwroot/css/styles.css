@@ -1,0 +1,576 @@
+﻿/* Mobil */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 1em;
+}
+
+#page-wrapper {
+    display: block;
+    position: relative;
+    min-height: 100vh;
+    padding-bottom: 250px;
+}
+
+header {
+    width: 100%;
+    height: 50px;
+    padding: 0 10px;
+    position: fixed;
+    background-color: #3F4294;
+}
+
+#header-wrapper {
+    max-width: 1180px;
+    overflow: auto;
+}
+
+#logo {
+    display: block;
+    width: 45px;
+    float: left;
+    margin-top: 4px;
+}
+
+#header-right {
+    width: 250px;
+    float: right;
+    padding: 10px 0;
+}
+
+#search {
+    width: 210px;
+    height: 35px;
+    overflow: auto;
+    float: left;
+}
+
+#search > label {
+    position: absolute;
+    bottom: 10000px;
+}
+
+#search-bar {
+    display: block;
+    max-width: 100px;
+    height: 30px;
+    font-family: inherit;
+    font-size: inherit;
+    border-radius: 15px;
+    margin-right: 2.5px;
+    border: none;
+    padding-left: 10px;
+    float: left;
+}
+
+#search-btn {
+    width: 100px;
+    border-radius: 15px;
+    margin-left: 2.5px;
+    padding: 0;
+    background-color: #3F4294;
+    border: 3px solid white;
+    height: 30px;
+    color: white;
+    font-weight: bold;
+}
+
+#search-icon:hover {
+    cursor: pointer;
+}
+
+#nav-icon {
+    max-width: 40px;
+    float: right;
+    margin-top: 4px;
+}
+
+#nav-icon:hover {
+    cursor: pointer;
+}
+
+.bar {
+    width: 35px;
+    height: 4px;
+    background-color: white;
+    border-radius: 2px;
+}
+
+#bar1 {
+    margin-bottom: 5px;
+}
+
+#bar2 {
+    margin: 4px 0;
+}
+
+#bar3 {
+    margin-top: 5px;
+}
+
+#main-nav-desktop {
+    display: none;
+}
+
+#main-nav-mobile {
+    width: 100%;
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 50px;
+    background-color: #3F4294;
+    display: none;
+}
+
+.main-nav > ul {
+    list-style-type: none;
+}
+
+.main-nav ul > li {
+    padding: 5px 10px;
+}
+
+#main-nav-mobile ul:first-child {
+    margin-top: 5px;
+}
+
+#main-nav-mobile ul:last-child {
+    margin-bottom: 5px;
+}
+
+.navlink {
+    color: white;
+    font-weight: bold;
+}
+
+.navlink:hover {
+    text-decoration: underline;
+}
+
+main {
+    padding-top: 50px;
+    color: #2C2F74;
+}
+
+#quote-section {
+    padding: 50px 10px;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.gray-section {
+    background-color: #EDEDF3;
+    border: 1px solid #EDEDF3;
+}
+
+.white-section {
+    background-color: white;
+}
+
+h1 {
+    font-size: 2.3em;
+    max-width: 600px;
+    margin: 10px auto;
+    margin-left: 10px;
+}
+
+#admin-menu {
+    padding: 10px;
+    padding-bottom: 30px;
+}
+
+#logout-wrapper {
+    max-width: 600px;
+    margin: 0 auto;
+    overflow: auto;
+    padding: 10px;
+}
+
+#logout {
+    width: 50%;
+    float: right;
+    text-align: right;
+}
+
+#logout-link {
+    color: #2C2F74;
+    font-weight: bold;
+    text-decoration: underline;
+}
+
+#back-to-admin {
+    width: 50%;
+    float: left;
+}
+
+#back-to-admin-link {
+    color: #2C2F74;
+    font-weight: bold;
+}
+
+#admin-text {
+    padding: 5px;
+}
+
+#admin-menu-btn-wrapper {
+    display: flex;
+    margin-top: 5px;
+}
+
+.admin-menu-btn {
+    width: 31%;
+    border-radius: 0;
+    text-align: center;
+}
+
+#admin-news-btn {
+    order: 1;
+}
+
+#admin-activities-btn {
+    margin: 0 2%;
+    order: 2;
+}
+
+#admin-quotes-btn {
+    order: 3;
+}
+
+.admin-menu-btn-inactive {
+    background-color: #9A2F48;
+    border: 1px solid #9A2F48;
+}
+
+.admin-menu-btn-inactive > a {
+    color: white;
+}
+
+.admin-menu-btn-active {
+    background-color: #EDEDF3;
+    border: 3px solid rgba(154, 47, 72, 0.8);
+}
+
+.admin-menu-btn-active > a {
+    color: #9A2F48;
+}
+
+button, .admin-menu-btn {
+    height: 30px;
+    font-family: inherit;
+    font-size: inherit;
+    font-weight: bold;
+}
+
+button:hover {
+    cursor: pointer;
+}
+
+.admin-form, #login-form {
+    padding: 20px 10px;
+}
+
+.admin-output {
+    padding-top: 30px;
+    padding-bottom: 100px;
+}
+
+.author {
+    text-align: right;
+    font-weight: bold;
+}
+
+div {
+    overflow: auto;
+}
+
+.edit {
+    width: 50%;
+    float: left;
+    text-align: left;
+}
+
+.delete {
+    width: 50%;
+    float: right;
+    text-align: right;
+}
+
+.edit-link {
+    font-size: 1.5em;
+    font-weight: bold;
+}
+
+.delete-link {
+    font-size: 1.5em;
+    font-weight: bold;
+}
+
+#quote {
+    font-size: 2em;
+    font-style: italic;
+    font-weight: bold;
+    text-align: center;
+}
+
+#author {
+    text-align: right;
+}
+
+.show-more {
+    text-align: center;
+}
+
+.show-more-link {
+    color: #2C2F74;
+    font-weight: bold;
+}
+
+h2 {
+    font-size: 2em;
+    margin-left: 10px;
+}
+
+form, #admin-menu > section, .admin-output {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+article, .quote {
+    max-width: 600px;
+    padding: 10px;
+    margin: 10px auto;
+    background-color: white;
+    border: 1px solid #C8D2DC;
+}
+
+h3 {
+    font-size: 1.65em;
+    margin-bottom: 5px;
+}
+
+p {
+    line-height: 1.5;
+    padding: 5px 0;
+}
+
+.date {
+    font-style: italic;
+    padding: 0;
+}
+
+.find-out-more {
+    display: block;
+    margin-top: 5px;
+    font-weight: bold;
+    color: black;
+}
+
+img {
+    width: 100%;
+    height: auto;
+}
+
+label {
+    font-weight: bold;
+    display: block;
+    margin-top: 10px;
+    margin-bottom: 5px;
+}
+
+input[type="text"], input[type="date"], input[type="password"] {
+    height: 30px;
+}
+
+.text-input, .button {
+    width: 100%;
+    font-family: inherit;
+    font-size: inherit;
+    padding-left: 10px;
+    background-color: #EDEDF3;
+    border: 1px solid #C8D2DC;
+}
+
+.text-input-error {
+    width: 100%;
+    font-family: inherit;
+    font-size: inherit;
+    padding-left: 10px;
+    border: 2px solid #E12F2F;
+}
+
+textarea {
+    height: 200px;
+}
+
+.error {
+    font-weight: bold;
+    color: #E12F2F;
+}
+
+.confirm {
+    font-weight: bold;
+}
+
+.button:hover {
+    cursor: pointer;
+}
+
+.submit {
+    width: 100%;
+    background-color: #0D7D66;
+    color: white;
+    border: 1px solid #0D7D66;
+    margin-top: 10px;
+    margin-bottom: 2.5px;
+    font-weight: bold;
+}
+
+.reset {
+    width: 100%;
+    background-color: #CB3D3D;
+    color: white;
+    border: 1px solid #CB3D3D;
+    margin-top: 2.5px;
+    font-weight: bold;
+}
+
+a {
+    text-decoration: none;
+}
+
+.show-more-link {
+    text-decoration: underline;
+}
+
+footer {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 250px;
+    padding: 30px 10px;
+    background-color: #2C2F74;
+}
+
+#footer-wrapper {
+    overflow: auto;
+}
+
+#footer-nav {
+    width: 85px;
+    float: left;
+}
+
+#footer-nav > ul, #contact {
+    list-style-type: none;
+}
+
+#footer-nav ul > li {
+    padding: 5px 0;
+}
+
+#contact {
+    width: 155px;
+    float: right;
+    margin-top: 20px;
+}
+
+#contact > li {
+    padding: 5px 0;
+    color: white;
+    font-weight: bold;
+}
+
+#email-link {
+    color: white;
+    font-weight: bold;
+}
+
+/* Surfplatta */
+@media only screen and (min-width: 600px) {
+    h1 {
+        margin: 10px auto;
+    }
+}
+
+/* Desktop */
+@media only screen and (min-width: 960px) {
+    #page-wrapper {
+        padding-bottom: 255px;
+    }
+
+    header {
+        position: static;
+    }
+
+    #header-wrapper {
+        max-width: 1180px;
+        margin: 0 auto;
+    }
+
+    #header-right {
+        width: 730px;
+    }
+
+    #nav-icon {
+        display: none;
+    }
+
+    #main-nav-mobile {
+        display: none;
+    }
+
+    #main-nav-desktop {
+        display: block;
+        max-width: 540px;
+        float: right;
+    }
+
+    #main-nav-desktop ul > li {
+        display: inline-block;
+    }
+
+    .h2-admin-output {
+        text-align: center;
+    }
+
+    .admin-form, #login-form {
+        padding: 20px 0;
+    }
+
+    .submit {
+        display: inline;
+        width: 48.6%;
+        margin-right: 1%;
+    }
+
+    .reset {
+        display: inline;
+        width: 48.6%;
+        margin-left: 1%;
+    }
+
+    .admin-output {
+        max-width: 1200px;
+    }
+
+    .row {
+        display: flex;
+    }
+
+    .news-article, .activity, .quote {
+        width: 32%;
+        max-width: 385px;
+        margin: 10px 0.7%;
+    }
+
+    #footer-wrapper {
+        max-width: 1180px;
+        margin: 0 auto;
+    }
+}

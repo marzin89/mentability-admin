@@ -1,0 +1,59 @@
+﻿<!-- Parial-vy för citat -->
+<!-- Namnrymd -->
+@using Mentability.Models;
+
+<div class="row">
+    @{
+        // Lagrar inläggen i ViewBag i en lista och det aktuella indexet
+        List<Quote> quotes = (List<Quote>)ViewBag.Quotes;
+        int index = (int)ViewBag.QuoteIndex;
+
+        // Denna lista används vid utskrift
+        List<Quote> render = new List<Quote>();
+
+        /* Lägger till inlägg i listan ovan med start från det aktuella indexet */
+        @for(int i = index; i < quotes.Count; i++)
+        {
+            render.Add(quotes[i]);
+        }
+
+        /* Om listan innehåller färre än tre aktiviteter, används en foreach-loop */
+        @if (render.Count < 3)
+        {
+            @foreach(Quote quote in render)
+            {
+                <div class="quote">
+                    <p class="admin-text"><i>@quote.Content</i></p>
+                    <p class="author">@quote.Author</p>
+                    <div>
+                        <p class="edit"><a asp-controller="EditQuote" asp-action="EditQuote" asp-route-id="@quote.Id" class="edit-link" 
+                            aria-label="Öppnar formuläret för redigering">✎</a></p>
+                        <p class="delete"><a asp-controller="Quote" asp-action="Delete" asp-route-id="@quote.Id" class="delete-link" 
+                            aria-label="Raderar citatet">🗑</a></p>
+                    </div>
+                </div>   
+            }
+        }
+        // Annars används tre som villkor vid utskrift
+        else
+        {
+            @for(int i = 0; i < 3; i++)
+            {
+                <div class="quote">
+                    <p class="admin-text"><i>@render[i].Content</i></p>
+                    <p class="author">@render[i].Author</p>
+                    <div>
+                        <p class="edit"><a asp-controller="EditQuote" asp-action="EditQuote" asp-route-id="@render[i].Id" class="edit-link" 
+                            aria-label="Öppnar formuläret för redigering">✎</a></p>
+                        <p class="delete"><a asp-controller="Quote" asp-action="Delete" asp-route-id="@render[i].Id" class="delete-link" 
+                            aria-label="Raderar citatet">🗑</a></p>
+                    </div>
+                </div>     
+            }
+        }
+    }               
+</div>
+
+
+
+

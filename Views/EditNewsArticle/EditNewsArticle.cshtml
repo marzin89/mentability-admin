@@ -1,0 +1,138 @@
+﻿<!-- Namnrymd -->
+@using Mentability.Models
+
+<!-- Modell -->
+@model NewsArticle;
+
+@{
+    // Sidans namn
+    ViewData["Title"] = "Redigera | Nyheter";
+}
+
+<!-- Slumpmässigt genererat citat -->
+<partial name="~/Views/Shared/_RandomQuote.cshtml" />
+
+<!-- Tillbaka till Admin, utloggning -->
+<partial name="~/Views/Shared/_Logout.cshtml" />
+
+<!-- Formulär med validering/felhantering -->
+<section class="white-section">
+    <h1>Redigera nyhet</h1>
+    <!-- Formuläret fylls i med med de aktuella uppgifterna i syfte att underlätta redigeringen -->
+    @if (Model != null)
+    {
+        <form id="admin-news-form" class="admin-form" asp-controller="EditNewsArticle" asp-action="UpdateNewsArticle" method="post">
+            <!-- Dolt inmatningsfält med nyhetens id (behövs vid uppdatering) -->
+            <input asp-for="Id" type="hidden" value="@Model.Id">
+            <!-- Titel -->
+            <label asp-for="Title"></label>
+            <input asp-for="Title" type="text" class="text-input article-input" value="@Model.Title" aria-required="true"
+                aria-describedby="news-title-error">
+            <span asp-validation-for="Title" id="news-title-error" class="error" role="alert"></span>
+            <!-- Innehåll -->
+            <label asp-for="Content"></label>
+
+            <!-- Tar bort eventuella blanksteg eftersom de genererar valideringsfel -->
+            @if (Model.Content.IndexOf("\r\n") > -1)
+            {
+                Model.Content = Model.Content.Replace("\r\n", " ");
+
+            }
+
+            <textarea asp-for="Content" class="text-input article-input" aria-required="true" aria-describedby="news-content-error">
+                @Model.Content</textarea>
+            <span asp-validation-for="Content" id="news-content-error" class="error" role="alert"></span>
+            <!-- Författare -->
+            <label asp-for="Author"></label>
+            <input asp-for="Author" type="text" class="text-input article-input" value="@Model.Author" aria-required="true" 
+                aria-describedby="news-author-error" />
+            <span asp-validation-for="Author" id="news-author-error" class="error" role="alert"></span>
+            <div>
+                <button id="submit-article" type="submit" class="submit">Uppdatera</button>
+                <button type="reset" class="reset">Rensa</button>
+            </div>
+        </form>
+    }
+    else
+    {
+        // Här skrivs ett felmeddelande ut om det inte gick att hitta nyheten
+        <p class="error" role="alert">Det gick inte att hitta nyhetsinlägget</p>
+    }
+</section>
+
+<script>
+    // Denna kod markerar tomma, obligatoriska inmatningsfält, genererar felmeddelanden och sätter aria-invalid till true/false
+    // Inmatningsfält, felmeddelanden och skicka-knapp
+    const articleInputs = document.getElementsByClassName('article-input');
+    const errorMessages = document.getElementsByClassName('error');
+    const submitArticle = document.getElementById('submit-article');
+
+    // När formuläret skickas, lagras alla inmatningar i webbläsaren samt att formuläret har skickats
+    submitArticle.addEventListener('click', () => {
+        sessionStorage.setItem('editArticleSubmitted', true);
+        sessionStorage.setItem('editArticleTitle', articleInputs[0].value);
+        sessionStorage.setItem('editArticleContent', articleInputs[1].value);
+        sessionStorage.setItem('editArticleAuthor', articleInputs[2].value);
+    });
+
+    // Koden nedan körs när formuläret har skickats och sidan laddas om
+    window.addEventListener('load', () => {
+        if (sessionStorage.getItem('editArticleSubmitted')) {
+            /* Om inmatningsfältet är tomt, eller om titeln är kortare än fem tecken,
+                ändras klassnamnet, aria-invalid och ett felmeddelande genereras */
+            if (!sessionStorage.getItem('editArticleTitle')) {
+                articleInputs[0].className = 'text-input-error article-input';
+                articleInputs[0].setAttribute('aria-invalid', true);
+                errorMessages[0].innerHTML = 'Du måste ange en titel';
+            
+            } else {
+                if (sessionStorage.getItem('editArticleTitle').length < 5) {
+                    articleInputs[0].className = 'text-input-error article-input';
+                    articleInputs[0].setAttribute('aria-invalid', true);
+                    errorMessages[0].innerHTML = 'Titeln måste vara minst fem tecken lång';
+                
+                // Annars återställs aria-invalid och den lagrade titeln skrivs ut i inmatningsfältet
+                } else {
+                    articleInputs[0].setAttribute('aria-invalid', false);
+                    articleInputs[0].value = sessionStorage.getItem('editArticleTitle');
+                }
+            }
+
+            /* Om inmatningsfältet är tomt, eller om innehållet är kortare än 300 tecken,
+                ändras klassnamnet, aria-invalid och ett felmeddelande genereras */
+            if (!sessionStorage.getItem('editArticleContent')) {
+                articleInputs[1].className = 'text-input-error article-input';
+                articleInputs[1].setAttribute('aria-invalid', true);
+                errorMessages[1].innerHTML = 'Du måste skriva ett innehåll';
+            
+            } else {
+                if (sessionStorage.getItem('editArticleContent').length < 300) {
+                    articleInputs[1].className = 'text-input-error article-input';
+                    articleInputs[1].setAttribute('aria-invalid', true);
+                    errorMessages[1].innerHTML = 'Inlägget måste vara minst 300 tecken långt';
+                
+                // Annars återställs aria-invalid och den lagrade texten skrivs ut i inmatningsfältet
+                } else {
+                    articleInputs[1].setAttribute('aria-invalid', false);
+                    articleInputs[1].value = sessionStorage.getItem('editArticleContent');
+                }
+            }
+
+            // Om inmatningsfältet är tomt, ändras klassnamnet, aria-invalid och ett felmeddelande genereras
+            if (!sessionStorage.getItem('editArticleAuthor')) {
+                articleInputs[2].className = 'text-input-error article-input';
+                articleInputs[2].setAttribute('aria-invalid', true);
+                errorMessages[2].innerHTML = 'Du måste ange en författare';
+            
+            // Annars återställs aria-invalid och den lagrade författaren skrivs ut i inmatningsfältet
+            } else {
+                articleInputs[2].setAttribute('aria-invalid', false);
+                articleInputs[2].value = sessionStorage.getItem('editArticleAuthor');
+            }
+        }
+    })
+</script>
+
+
+
+

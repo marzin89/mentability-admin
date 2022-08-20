@@ -1,0 +1,345 @@
+﻿<!-- Namnrymd -->
+@using Mentability.Models;
+
+<!-- Modell -->
+@model Activities;
+
+@{
+    // Sidans namn
+    ViewData["Title"] = "Admin | Aktiviteter";
+}
+
+<!-- Slumpmässigt genererat citat -->
+<partial name="~/Views/Shared/_RandomQuote.cshtml" />
+<!-- Huvudmeny Admin -->
+<partial name="~/Views/Shared/_AdminMenu.cshtml" />
+
+<!-- Formulär med validering/felhantering -->
+<div class="white-section">
+    <form id="admin-activities-form" class="admin-form" asp-controller="Activity" asp-action="Create" method="post">
+        <!-- Titel -->
+        <label asp-for="Title"></label>
+        <input asp-for="Title" type="text" class="text-input activity-input" aria-required="true" aria-describedby="activity-title-error">
+        <span asp-validation-for="Title" id="activity-title-error" class="error" role="alert"></span>
+        <!-- Startdatum -->
+        <label asp-for="StartDate"></label>
+        <input asp-for="StartDate" type="date" class="text-input activity-input" aria-required="true" aria-describedby="activity-start-date-error">
+        <span asp-validation-for="StartDate" id="activity-start-date-error" class="error" role="alert"></span>
+        <!-- Slutdatum -->
+        <label asp-for="EndDate"></label>
+        <input asp-for="EndDate" type="date" class="text-input activity-input" aria-required="false" aria-describedby="activity-end-date-error">
+        <span asp-validation-for="EndDate" id="activity-end-date-error" class="error" role="alert"></span>
+        <!-- Innehåll -->
+        <label asp-for="Content"></label>
+        <textarea asp-for="Content" class="text-input activity-input" aria-required="true" aria-describedby="activity-content-error"></textarea>
+        <span asp-validation-for="Content" id="activity-content-error" class="error" role="alert"></span>
+        <!-- Författare -->
+        <label asp-for="Author"></label>
+        <input asp-for="Author" type="text" class="text-input activity-input" aria-required="true" aria-describedby="activity-author-error" />
+        <span asp-validation-for="Author" id="activity-author-error" class="error" role="alert"></span>
+        <div>
+            <button id="submit-activity" type="submit" class="submit">Lägg till</button>
+            <button type="reset" class="reset">Rensa</button>
+        </div>
+
+        <!-- Här skrivs fel- och bekräftelsemeddelanden ut för lagring, uppdatering och borttagning.
+            Status lagras i ViewBag i controllern.-->
+        @if (ViewBag.Created != null)
+        {
+            if (ViewBag.Created)
+            {
+                <p class="confirm" role="alert">Aktiviteten har lagts till</p>
+            }
+            else
+            {
+                <p class="error" role="alert">Ett serverfel har uppstått. Det gick inte att lägga till aktiviteten.
+                    Försök igen senare.</p>
+            }
+        }
+
+        @if (ViewBag.Updated != null)
+        {
+            if (ViewBag.Updated == true)
+            {
+                <p class="confirm" role="alert">Aktiviteten har uppdaterats</p>
+            }
+            else
+            {
+                <p class="error" role="alert">Ett serverfel har uppstått. Det gick inte att uppdatera aktiviteten.
+                    Försök igen senare.</p>
+            }
+        }
+
+        @if (ViewBag.Deleted != null)
+        {
+            @if (ViewBag.Deleted)
+            {
+                <p class="confirm" role="alert">Aktiviteten har raderats</p>
+            }
+            else
+            {
+                <p class="error" role="alert">Ett serverfel har uppstått. Det gick inte att radera aktiviteten.
+                    Försök igen senare.</p>
+            }
+        }
+    </form>
+</div>
+
+<!-- Här skrivs befintliga poster ut med länkar för redigering och borttagning -->
+<div class="gray-section">
+    <section class="admin-output">
+        <h2 class="h2-admin-output">Akvititeter</h2>
+            <!-- Kontrollerar att listan inte är tom -->
+            @if (Model != null)
+            {
+                // Aktiviteterna lagras i ViewBag så att de går att komma åt i partial-vyn
+                ViewBag.Activities = Model.activities;
+
+                /* Om antalet aktiviteter är högst tre, så skrivs de ut utan att partial-vyn används.
+                    Den enda skillnaden är villkoret i loopen (tre eller längden på listan). */
+                @if (Model.activities.Count < 3)
+                {
+                    <div class="row">
+                        @for(int i = 0; i < Model.activities.Count; i++)
+                        {
+                            string startDate = Model.activities[i].StartDate.ToString("dd/MM/yyyy");
+
+                            <article class="activity">
+                                <h3>@Model.activities[i].Title</h3>
+                                <p class="date">@startDate</p>
+
+                                @if (@Model.activities[i].EndDate != null)
+                                {
+                                    string endDate = Model.activities[i].EndDate?.ToString("dd/MM/yyyy");
+
+                                    <p class="date">@endDate</p>
+                                }
+
+                                <!-- Tar bort eventuella blanksteg eftersom de genererar valideringsfel -->
+                                @if (Model.activities[i].Content.IndexOf("\r\n") > -1)
+                                {
+                                    Model.activities[i].Content = Model.activities[i].Content.Replace("\r\n", " ");
+                                }
+
+                                <p class="admin-text">@Model.activities[i].Content.Substring(0, 150) ...</p>
+                                <div>
+                                    <p class="edit"><a asp-controller="EditActivity" asp-action="EditActivity" asp-route-id="@Model.activities[i].Id" class="edit-link" 
+                                        aria-label="Öppnar formuläret för redigering">✎</a></p>
+                                    <p class="delete"><a asp-controller="Activity" asp-action="Delete" asp-route-id="@Model.activities[i].Id" class="delete-link" 
+                                        aria-label="Raderar aktiviteten">🗑</a></p>
+                                </div>
+                            </article>
+                        }
+                    </div>
+                    }
+                    else if (Model.activities.Count == 3)
+                    {
+                        <div class="row">
+                            @for(int i = 0; i < 3; i++)
+                            {
+                                string startDate = Model.activities[i].StartDate.ToString("dd/MM/yyyy");
+
+                                <article class="activity">
+                                    <h3>@Model.activities[i].Title</h3>
+                                    <p class="date">@startDate</p>
+
+                                    @if (@Model.activities[i].EndDate != null)
+                                    {
+                                        string endDate = Model.activities[i].EndDate?.ToString("dd/MM/yyyy");
+
+                                        <p class="date">@endDate</p>
+                                    }
+
+                                    <!-- Tar bort eventuella blanksteg eftersom de genererar valideringsfel -->
+                                    @if (Model.activities[i].Content.IndexOf("\r\n") > -1)
+                                    {
+                                        Model.activities[i].Content = Model.activities[i].Content.Replace("\r\n", " ");
+                                    }
+
+                                    <p class="admin-text">@Model.activities[i].Content.Substring(0, 150) ...</p>
+                                    <div>
+                                        <p class="edit"><a asp-controller="EditActivity" asp-action="EditActivity" asp-route-id="@Model.activities[i].Id" class="edit-link" 
+                                            aria-label="Öppnar formuläret för redigering">✎</a></p>
+                                        <p class="delete"><a asp-controller="Activity" asp-action="Delete" asp-route-id="@Model.activities[i].Id" class="delete-link" 
+                                            aria-label="Raderar aktiviteten">🗑</a></p>
+                                    </div>
+                                </article>
+                            }
+                        </div>
+                    }
+                    else
+                    {   
+                        /* Om det finns fler än tre aktiviteter, skrivs tre aktiviteter ut om användaren inte har valt "Visa fler" 
+                            (lagras i ViewBag i controllern) */
+                        if ((int)ViewBag.NumberOfActivities == null)
+                        {
+                            @for(int i = 0; i < 3; i++)
+                            {
+                                string startDate = Model.activities[i].StartDate.ToString("dd/MM/yyyy");
+
+                                <article class="activity">
+                                    <h3>@Model.activities[i].Title</h3>
+                                    <p class="date">@startDate</p>
+
+                                    @if (@Model.activities[i].EndDate != null)
+                                    {
+                                        string endDate = Model.activities[i].EndDate?.ToString("dd/MM/yyyy");
+
+                                        <p class="date">@endDate</p>
+                                    }
+
+                                    <!-- Tar bort eventuella blanksteg eftersom de genererar valideringsfel -->
+                                    @if (Model.activities[i].Content.IndexOf("\r\n") > -1)
+                                    {
+                                        Model.activities[i].Content = Model.activities[i].Content.Replace("\r\n", " ");
+                                    }
+
+                                    <p class="admin-text">@Model.activities[i].Content.Substring(0, 150) ...</p>
+                                    <div>
+                                        <p class="edit"><a asp-controller="EditActivity" asp-action="EditActivity" asp-route-id="@Model.activities[i].Id" class="edit-link" 
+                                            aria-label="Öppnar formuläret för redigering">✎</a></p>
+                                        <p class="delete"><a asp-controller="Activity" asp-action="Delete" asp-route-id="@Model.activities[i].Id" class="delete-link" 
+                                            aria-label="Raderar aktiviteten">🗑</a></p>
+                                    </div>
+                                </article>
+                            }
+                        }
+                        /* Om användaren har valt "Visa fler", används antalet kolumner (lagras i ViewBag i controllern) som villkor.
+                            Utskrift sker med hjälp av partial-vyn och index uppdateras inför varje iteration så att inga aktiviteter skrivs ut dubbelt. */
+                        else
+                        {
+                            int count = 0;
+                            int numberOfColumns = (int)ViewBag.NumberOfColumnsActivity;
+
+                            @for(int i = 0; i < numberOfColumns; i++)
+                            {
+                                ViewBag.ActivityIndex = count;
+                                <partial name="~/Views/Shared/_ActivityOutput.cshtml" />
+
+                                count += 3;
+                            }
+                        }                
+                    }
+                }
+                // Om listan är tom, skrivs ett felmeddelande ut
+                else
+                {
+                    <p class="error" role="alert">Ett serverfel har uppstått. Det gick inte att hämta aktiviteter.
+                        Försök igen senare.</p>
+                }
+        <!-- Här väljer användaren att visa fler aktiviteter. Antalet poster i modellen skickas med som id
+            (antalet saknar dock betydelse) -->
+        <p class="show-more"><a asp-controller="Activity" asp-action="Activity" asp-route-id="@Model.activities.Count" class="show-more-link">Visa fler</a></p>
+    </section>
+</div>
+
+<script>
+    // Denna kod markerar tomma, obligatoriska inmatningsfält, genererar felmeddelanden och sätter aria-invalid till true/false
+    // Inmatningsfält, felmeddelanden, skicka-knapp och datum
+    const activityInputs = document.getElementsByClassName('activity-input');
+    const errorMessages = document.getElementsByClassName('error');
+    const submitActivity = document.getElementById('submit-activity');
+    const date = new Date();
+
+    // När formuläret skickas, lagras alla inmatningar i webbläsaren samt att formuläret har skickats
+    submitActivity.addEventListener('click', () => {
+        sessionStorage.setItem('activitySubmitted', true);
+        sessionStorage.setItem('activityTitle', activityInputs[0].value);
+        sessionStorage.setItem('startDate', activityInputs[1].value);
+        sessionStorage.setItem('endDate', activityInputs[2].value);
+        sessionStorage.setItem('activityContent', activityInputs[3].value);
+        sessionStorage.setItem('activityAuthor', activityInputs[4].value);
+    });
+
+    // Koden nedan körs när formuläret har skickats och sidan laddas om
+    window.addEventListener('load', () => {
+        if (sessionStorage.getItem('activitySubmitted')) {
+            /* Om inmatningsfältet är tomt, eller om titeln är kortare än fem tecken,
+                ändras klassnamnet, aria-invalid och ett felmeddelande genereras */
+            if (!sessionStorage.getItem('activityTitle')) {
+                activityInputs[0].className = 'text-input-error activity-input';
+                activityInputs[0].setAttribute('aria-invalid', true);
+                errorMessages[0].innerHTML = 'Du måste ange en titel';
+            
+            } else {
+                if (sessionStorage.getItem('activityTitle').length < 5) {
+                    activityInputs[0].className = 'text-input-error activity-input';
+                    activityInputs[0].setAttribute('aria-invalid', true);
+                    errorMessages[0].innerHTML = 'Titeln måste vara minst fem tecken lång';
+                
+                // Annars återställs aria-invalid och den lagrade titeln skrivs ut i inmatningsfältet
+                } else {
+                    activityInputs[0].setAttribute('aria-invalid', false);
+                    activityInputs[0].value = sessionStorage.getItem('activityTitle');
+                }
+            }
+
+            /* Om inmatningsfältet är tomt, eller om startdatumet är tidigare än eller identiskt med dagens datum,
+                ändras klassnamnet, aria-invalid och ett felmeddelande genereras */
+            if (!sessionStorage.getItem('startDate')) {
+                activityInputs[1].className = 'text-input-error activity-input';
+                activityInputs[1].setAttribute('aria-invalid', true);
+                errorMessages[1].innerHTML = 'Du måste ange ett startdatum';
+            
+            } else {
+                if (sessionStorage.getItem('startDate') <= date.toLocaleDateString()) {
+                    activityInputs[1].className = 'text-input-error activity-input';
+                    activityInputs[1].setAttribute('aria-invalid', true);
+                    errorMessages[1].innerHTML = 'Startdatumet måste vara minst en dag senare än dagens datum';
+                
+                // Annars återställs aria-invalid och det lagrade startdatumet skrivs ut i inmatningsfältet
+                } else {
+                    activityInputs[1].setAttribute('aria-invalid', false);
+                    activityInputs[1].value = sessionStorage.getItem('startDate');
+                }
+            }
+
+            /* Om ett slutdatum har angetts och om slutdatumet är tidigare än eller identiskt med startdatumet,
+                ändras klassnamnet, aria-invalid och ett felmeddelande genereras */
+            if (sessionStorage.getItem('endDate')) {
+                if (sessionStorage.getItem('endDate') <= sessionStorage.getItem('startDate')) {
+                    activityInputs[2].className = 'text-input-error activity-input';
+                    activityInputs[2].setAttribute('aria-invalid', true);
+                    errorMessages[2].innerHTML = 'Slutdatumet måste vara minst en dag senare än startdatumet';
+                
+                // Annars återställs aria-invalid och det lagrade slutdatumet skrivs ut i inmatningsfältet
+                } else {
+                    activityInputs[2].setAttribute('aria-invalid', false);
+                    activityInputs[2].value = sessionStorage.getItem('endDate');
+                }
+            }
+
+            /* Om inmatningsfältet är tomt, eller om beskrivningen är kortare än 100 tecken,
+                ändras klassnamnet, aria-invalid och ett felmeddelande genereras */
+            if (!sessionStorage.getItem('activityContent')) {
+                activityInputs[3].className = 'text-input-error activity-input';
+                activityInputs[3].setAttribute('aria-invalid', true);
+                errorMessages[3].innerHTML = 'Du måste skriva en beskrivning';
+            
+            } else {
+                if (sessionStorage.getItem('activityContent').length < 100) {
+                    activityInputs[3].className = 'text-input-error activity-input';
+                    activityInputs[3].setAttribute('aria-invalid', true);
+                    errorMessages[3].innerHTML = 'Beskrivningen måste vara minst 100 tecken lång';
+                
+                // Annars återställs aria-invalid och den lagrade beskrivningen skrivs ut i inmatningsfältet
+                } else {
+                    activityInputs[3].setAttribute('aria-invalid', false);
+                    activityInputs[3].value = sessionStorage.getItem('activityContent');
+                }
+            }
+
+            // Om inmatningsfältet är tomt, ändras klassnamnet, aria-invalid och ett felmeddelande genereras
+            if (!sessionStorage.getItem('activityAuthor')) {
+                activityInputs[4].className = 'text-input-error activity-input';
+                activityInputs[4].setAttribute('aria-invalid', true);
+                errorMessages[4].innerHTML = 'Du måste ange en författare';
+            
+            // Annars återställs aria-invalid och den lagrade författaren skrivs ut i inmatningsfältet
+            } else {
+                activityInputs[4].setAttribute('aria-invalid', false);
+                activityInputs[4].value = sessionStorage.getItem('activityAuthor');
+            }
+        }
+    })
+</script>

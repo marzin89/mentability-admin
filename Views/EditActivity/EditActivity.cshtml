@@ -1,0 +1,196 @@
+﻿<!-- Namnrymd -->
+@using Mentability.Models;
+
+<!-- Modell -->
+@model Activities;
+
+@{
+    // Sidans namn
+    ViewData["Title"] = "Redigera | Aktiviteter";
+}
+
+<!-- Slumpmässigt genererat citat -->
+<partial name="~/Views/Shared/_RandomQuote.cshtml" />
+
+<!-- Tillbaka till Admin, utloggning -->
+<partial name="~/Views/Shared/_Logout.cshtml" />
+
+<!-- Formulär med validering/felhantering -->
+<section class="white-section">
+    <h1>Redigera aktivitet</h1>
+    <!-- Formuläret fylls i med med de aktuella uppgifterna i syfte att underlätta redigeringen -->
+    @if (Model != null)
+    {
+        string startDate = Model.StartDate.ToString("yyyy-MM-dd");
+
+        <form id="admin-activities-form" class="admin-form" asp-controller="EditActivity" asp-action="UpdateActivity" method="post">
+            <!-- Dolt inmatningsfält med aktivitetens id (behövs vid uppdatering) -->
+            <input asp-for="Id" type="hidden" value="@Model.Id">
+            <!-- Titel -->
+            <label asp-for="Title"></label>
+            <input asp-for="Title" type="text" class="text-input activity-input" value="@Model.Title" aria-required="true" 
+                aria-describedby="activity-title-error">
+            <span asp-validation-for="Title" id="activity-title-error" class="error" role="alert"></span>
+            <!-- Startdatum -->
+            <label asp-for="StartDate"></label>
+            <input asp-for="StartDate" type="date" class="text-input activity-input" value="@startDate" aria-required="true" 
+                aria-describedby="activity-start-date-error">
+            <span asp-validation-for="StartDate" id="activity-start-date-error" class="error" role="alert"></span>
+            <!-- Slutdatum -->
+            <label asp-for="EndDate"></label>
+
+            <!-- Slutdatum är ingen obligatorisk uppgift -->
+            @if (Model.EndDate != null)
+            {
+                string endDate = Model.EndDate?.ToString("yyyy-MM-dd");
+
+                <input asp-for="EndDate" type="date" class="text-input activity-input" value="@endDate" aria-required="false" 
+                    aria-describedby="activity-end-date-error">
+            }
+            else
+            {
+                <input asp-for="EndDate" type="date" class="text-input" aria-required="false" aria-describedby="activity-end-date-error">
+            }
+
+            <span asp-validation-for="EndDate" id="activity-end-date-error" class="error" role="alert"></span>
+            <!-- Beskrivning -->
+            <label asp-for="Content"></label>
+
+            <!-- Tar bort eventuella blanksteg eftersom de genererar valideringsfel -->
+            @if (Model.Content.IndexOf("\r\n") > -1)
+            {
+                Model.Content = Model.Content.Replace("\r\n", " ");
+            }
+
+            <textarea asp-for="Content" class="text-input activity-input" aria-required="true" aria-describedby="activity-content-error">
+                @Model.Content</textarea>
+            <span asp-validation-for="Content" id="activity-content-error" class="error" role="alert"></span>
+            <!-- Författare -->
+            <label asp-for="Author"></label>
+            <input asp-for="Author" type="text" class="text-input activity-input" value="@Model.Author" aria-required="true" 
+                aria-describedby="activity-author-error" />
+            <span asp-validation-for="Author" id="activity-author-error" class="error" role="alert"></span>
+            <div>
+                <button id="submit-activity" type="submit" class="submit">Uppdatera</button>
+                <button type="reset" class="reset">Rensa</button>
+            </div>
+        </form>
+    }
+    else
+    {
+        // Här skrivs ett felmeddelande ut om det inte gick att hitta aktiviteten
+        <p class="error" role="alert">Det gick inte att hitta aktiviteten</p>
+    }
+</section>
+
+<script>
+    // Denna kod markerar tomma, obligatoriska inmatningsfält, genererar felmeddelanden och sätter aria-invalid till true/false
+    // Inmatningsfält, felmeddelanden, skicka-knapp och datum
+    const activityInputs = document.getElementsByClassName('activity-input');
+    const errorMessages = document.getElementsByClassName('error');
+    const submitActivity = document.getElementById('submit-activity');
+    const date = new Date();
+
+    // När formuläret skickas, lagras alla inmatningar i webbläsaren samt att formuläret har skickats
+    submitActivity.addEventListener('click', () => {
+        sessionStorage.setItem('editActivitySubmitted', true);
+        sessionStorage.setItem('editActivityTitle', activityInputs[0].value);
+        sessionStorage.setItem('editStartDate', activityInputs[1].value);
+        sessionStorage.setItem('editEndDate', activityInputs[2].value);
+        sessionStorage.setItem('editActivityContent', activityInputs[3].value);
+        sessionStorage.setItem('editActivityAuthor', activityInputs[4].value);
+    });
+
+    // Koden nedan körs när formuläret har skickats och sidan laddas om
+    window.addEventListener('load', () => {
+        if (sessionStorage.getItem('editActivitySubmitted')) {
+            /* Om inmatningsfältet är tomt, eller om titeln är kortare än fem tecken,
+                ändras klassnamnet, aria-invalid och ett felmeddelande genereras */
+            if (!sessionStorage.getItem('editActivityTitle')) {
+                activityInputs[0].className = 'text-input-error activity-input';
+                activityInputs[0].setAttribute('aria-invalid', true);
+                errorMessages[0].innerHTML = 'Du måste ange en titel';
+            
+            } else {
+                if (sessionStorage.getItem('editActivityTitle').length < 5) {
+                    activityInputs[0].className = 'text-input-error activity-input';
+                    activityInputs[0].setAttribute('aria-invalid', true);
+                    errorMessages[0].innerHTML = 'Titeln måste vara minst fem tecken lång';
+                
+                // Annars återställs aria-invalid och den lagrade titeln skrivs ut i inmatningsfältet
+                } else {
+                    activityInputs[0].setAttribute('aria-invalid', false);
+                    activityInputs[0].value = sessionStorage.getItem('editActivityTitle');
+                }
+            }
+
+            /* Om inmatningsfältet är tomt, eller om startdatumet är tidigare än eller identiskt med dagens datum,
+                ändras klassnamnet, aria-invalid och ett felmeddelande genereras */
+            if (!sessionStorage.getItem('editStartDate')) {
+                activityInputs[1].className = 'text-input-error activity-input';
+                activityInputs[1].setAttribute('aria-invalid', true);
+                errorMessages[1].innerHTML = 'Du måste ange ett startdatum';
+            
+            } else {
+                if (sessionStorage.getItem('editStartDate') <= date.toLocaleDateString()) {
+                    activityInputs[1].className = 'text-input-error activity-input';
+                    activityInputs[1].setAttribute('aria-invalid', true);
+                    errorMessages[1].innerHTML = 'Startdatumet måste vara minst en dag senare än dagens datum';
+                
+                // Annars återställs aria-invalid och det lagrade startdatumet skrivs ut i inmatningsfältet
+                } else {
+                    activityInputs[1].setAttribute('aria-invalid', false);
+                    activityInputs[1].value = sessionStorage.getItem('editStartDate');
+                }
+            }
+
+            /* Om ett slutdatum har angetts och om slutdatumet är tidigare än eller identiskt med startdatumet,
+                ändras klassnamnet, aria-invalid och ett felmeddelande genereras */
+            if (sessionStorage.getItem('editEndDate')) {
+                if (sessionStorage.getItem('editEndDate') <= sessionStorage.getItem('editStartDate')) {
+                    activityInputs[2].className = 'text-input-error activity-input';
+                    activityInputs[2].setAttribute('aria-invalid', true);
+                    errorMessages[2].innerHTML = 'Slutdatumet måste vara minst en dag senare än startdatumet';
+                
+                // Annars återställs aria-invalid och det lagrade slutdatumet skrivs ut i inmatningsfältet
+                } else {
+                    activityInputs[2].setAttribute('aria-invalid', false);
+                    activityInputs[2].value = sessionStorage.getItem('editEndDate');
+                }
+            }
+
+            /* Om inmatningsfältet är tomt, eller om beskrivningen är kortare än 100 tecken,
+                ändras klassnamnet, aria-invalid och ett felmeddelande genereras */
+            if (!sessionStorage.getItem('editActivityContent')) {
+                activityInputs[3].className = 'text-input-error activity-input';
+                activityInputs[3].setAttribute('aria-invalid', true);
+                errorMessages[3].innerHTML = 'Du måste skriva en beskrivning';
+            
+            } else {
+                if (sessionStorage.getItem('editActivityContent').length < 100) {
+                    activityInputs[3].className = 'text-input-error activity-input';
+                    activityInputs[3].setAttribute('aria-invalid', true);
+                    errorMessages[3].innerHTML = 'Beskrivningen måste vara minst 100 tecken lång';
+                
+                // Annars återställs aria-invalid och den lagrade beskrivningen skrivs ut i inmatningsfältet
+                } else {
+                    activityInputs[3].setAttribute('aria-invalid', false);
+                    activityInputs[3].value = sessionStorage.getItem('editActivityContent');
+                }
+            }
+
+            // Om inmatningsfältet är tomt, ändras klassnamnet, aria-invalid och ett felmeddelande genereras
+            if (!sessionStorage.getItem('editActivityAuthor')) {
+                activityInputs[4].className = 'text-input-error activity-input';
+                activityInputs[4].setAttribute('aria-invalid', true);
+                errorMessages[4].innerHTML = 'Du måste ange en författare';
+            
+            // Annars återställs aria-invalid och den lagrade författaren skrivs ut i inmatningsfältet
+            } else {
+                activityInputs[4].setAttribute('aria-invalid', false);
+                activityInputs[4].value = sessionStorage.getItem('editActivityAuthor');
+            }
+        }
+    })
+</script>
+

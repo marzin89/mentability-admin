@@ -1,0 +1,103 @@
+﻿<!-- Namnrymd -->
+@using Mentability.Models;
+
+<!-- Modell -->
+@model Quote;
+
+@{
+    // Sidans namn
+    ViewData["Title"] = "Redigera | Citat";
+}
+
+
+<!-- Slumpmässigt genererat citat -->
+<partial name="~/Views/Shared/_RandomQuote.cshtml" />
+
+<!-- Tillbaka till Admin, utloggning -->
+<partial name="~/Views/Shared/_Logout.cshtml" />
+
+<!-- Formulär med validering/felhantering -->
+<section class="white-section">
+    <h1>Redigera citat</h1>
+    <!-- Formuläret fylls i med med de aktuella uppgifterna i syfte att underlätta redigeringen -->
+    @if (Model != null)
+    {
+        <form id="admin-quotes-form" class="admin-form" asp-controller="EditQuote" asp-action="UpdateQuote" method="post">
+            <!-- Dolt inmatningsfält med citatets id (behövs vid uppdatering) -->
+            <input asp-for="Id" type="hidden" value="@Model.Id">
+            <!-- Upphovsperson -->
+            <label asp-for="Author"></label>
+            <input asp-for="Author" type="text" class="text-input quote-input" value="@Model.Author" aria-required="true" 
+                aria-describedby="quote-author-error">
+            <span asp-validation-for="Author" id="quote-author-error" class="error" role="alert"></span>
+            <!-- Citat -->
+            <label asp-for="Content"></label>
+            <textarea asp-for="Content" class="text-input quote-input" aria-required="true" aria-describedby="quote-content-error">
+                @Model.Content</textarea>
+            <span asp-validation-for="Content" id="quote-content-error" class="error" role="alert"></span>
+            <div>
+                <button id="submit-quote" type="submit" class="submit">Uppdatera</button>
+                <button type="reset" class="reset">Rensa</button>
+            </div>
+        </form>
+    }
+    else
+    {
+        // Här skrivs ett felmeddelande ut om det inte gick att hitta citatet
+        <p class="error" role="alert">Det gick inte att hitta citatet</p>
+    }
+</section>
+
+<script>
+    // Denna kod markerar tomma, obligatoriska inmatningsfält, genererar felmeddelanden och sätter aria-invalid till true/false
+    // Inmatningsfält, felmeddelanden och skicka-knapp
+    const quoteInputs = document.getElementsByClassName('quote-input');
+    const errorMessages = document.getElementsByClassName('error');
+    const submitQuote = document.getElementById('submit-quote');
+
+    // När formuläret skickas, lagras alla inmatningar i webbläsaren samt att formuläret har skickats
+    submitQuote.addEventListener('click', () => {
+        sessionStorage.setItem('editQuoteSubmitted', true);
+        sessionStorage.setItem('editQuoteAuthor', quoteInputs[0].value);
+        sessionStorage.setItem('editQuoteContent', quoteInputs[1].value);
+    });
+
+    // Koden nedan körs när formuläret har skickats och sidan laddas om
+    window.addEventListener('load', () => {
+        if (sessionStorage.getItem('editQuoteSubmitted')) {
+            // Om inmatningsfältet är tomt, ändras klassnamnet, aria-invalid och ett felmeddelande genereras
+            if (!sessionStorage.getItem('editQuoteAuthor')) {
+                quoteInputs[0].className = 'text-input-error quote-input';
+                quoteInputs[0].setAttribute('aria-invalid', true);
+                errorMessages[0].innerHTML = 'Du måste ange en upphovsperson';
+
+            // Annars återställs aria-invalid och den lagrade upphovspersonen skrivs ut i inmatningsfältet
+            } else {
+                quoteInputs[0].setAttribute('aria-invalid', false);
+                quoteInputs[0].value = sessionStorage.getItem('editQuoteAuthor');
+            }
+
+            if (!sessionStorage.getItem('editQuoteContent')) {
+                quoteInputs[1].className = 'text-input-error quote-input';
+                quoteInputs[1].setAttribute('aria-invalid', true);
+                errorMessages[1].innerHTML = 'Du måste skriva ett citat';
+            
+            /* Om inmatningsfältet är tomt, eller om citatet är kortare än 20 tecken,
+                ändras klassnamnet, aria-invalid och ett felmeddelande genereras */
+            } else {
+                if (sessionStorage.getItem('editQuoteContent').length < 20) {
+                    quoteInputs[1].className = 'text-input-error quote-input';
+                    quoteInputs[1].setAttribute('aria-invalid', true);
+                    errorMessages[1].innerHTML = 'Citatet måste vara minst 20 tecken långt';
+                
+                // Annars återställs aria-invalid och det lagrade citatet skrivs ut i inmatningsfältet
+                } else {
+                    quoteInputs[1].setAttribute('aria-invalid', false);
+                    quoteInputs[1].value = sessionStorage.getItem('editQuoteContent');
+                }
+            }
+        }
+    })
+</script>
+
+

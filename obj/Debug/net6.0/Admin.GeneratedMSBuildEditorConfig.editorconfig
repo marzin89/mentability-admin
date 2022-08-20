@@ -1,0 +1,120 @@
+is_global = true
+build_property.TargetFramework = net6.0
+build_property.TargetPlatformMinVersion = 
+build_property.UsingMicrosoftNETSdkWeb = true
+build_property.ProjectTypeGuids = 
+build_property.InvariantGlobalization = 
+build_property.PlatformNeutralAssembly = 
+build_property._SupportedPlatformList = Linux,macOS,Windows
+build_property.RootNamespace = Admin
+build_property.RootNamespace = Admin
+build_property.ProjectDir = C:\Users\Marco\Documents\Webbutveckling distans\Webbutveckling med .NET\moment4\Webbplats\backend\Admin\
+build_property.RazorLangVersion = 6.0
+build_property.SupportLocalizedComponentNames = 
+build_property.GenerateRazorMetadataSourceChecksumAttributes = 
+build_property.MSBuildProjectDirectory = C:\Users\Marco\Documents\Webbutveckling distans\Webbutveckling med .NET\moment4\Webbplats\backend\Admin
+build_property._RazorSourceGeneratorDebug = 
+
+[C:/Users/Marco/Documents/Webbutveckling distans/Webbutveckling med .NET/moment4/Webbplats/backend/Admin/Areas/Identity/Pages/Account/Login.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxMb2dpbi5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Marco/Documents/Webbutveckling distans/Webbutveckling med .NET/moment4/Webbplats/backend/Admin/Areas/Identity/Pages/Account/Logout.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxMb2dvdXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Marco/Documents/Webbutveckling distans/Webbutveckling med .NET/moment4/Webbplats/backend/Admin/Areas/Identity/Pages/Account/Register.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxSZWdpc3Rlci5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Marco/Documents/Webbutveckling distans/Webbutveckling med .NET/moment4/Webbplats/backend/Admin/Areas/Identity/Pages/Account/_ViewImports.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxfVmlld0ltcG9ydHMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Marco/Documents/Webbutveckling distans/Webbutveckling med .NET/moment4/Webbplats/backend/Admin/Areas/Identity/Pages/_ValidationScriptsPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcX1ZhbGlkYXRpb25TY3JpcHRzUGFydGlhbC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Marco/Documents/Webbutveckling distans/Webbutveckling med .NET/moment4/Webbplats/backend/Admin/Areas/Identity/Pages/_ViewImports.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Marco/Documents/Webbutveckling distans/Webbutveckling med .NET/moment4/Webbplats/backend/Admin/Areas/Identity/Pages/_ViewStart.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcX1ZpZXdTdGFydC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Marco/Documents/Webbutveckling distans/Webbutveckling med .NET/moment4/Webbplats/backend/Admin/Views/Activity/Activity.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWN0aXZpdHlcQWN0aXZpdHkuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Marco/Documents/Webbutveckling distans/Webbutveckling med .NET/moment4/Webbplats/backend/Admin/Views/EditActivity/EditActivity.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRWRpdEFjdGl2aXR5XEVkaXRBY3Rpdml0eS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Marco/Documents/Webbutveckling distans/Webbutveckling med .NET/moment4/Webbplats/backend/Admin/Views/EditNewsArticle/EditNewsArticle.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRWRpdE5ld3NBcnRpY2xlXEVkaXROZXdzQXJ0aWNsZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Marco/Documents/Webbutveckling distans/Webbutveckling med .NET/moment4/Webbplats/backend/Admin/Views/EditQuote/EditQuote.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRWRpdFF1b3RlXEVkaXRRdW90ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Marco/Documents/Webbutveckling distans/Webbutveckling med .NET/moment4/Webbplats/backend/Admin/Views/NewsArticle/NewsArticle.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTmV3c0FydGljbGVcTmV3c0FydGljbGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Marco/Documents/Webbutveckling distans/Webbutveckling med .NET/moment4/Webbplats/backend/Admin/Views/Quote/Quote.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUXVvdGVcUXVvdGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Marco/Documents/Webbutveckling distans/Webbutveckling med .NET/moment4/Webbplats/backend/Admin/Views/Shared/Error.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXEVycm9yLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Marco/Documents/Webbutveckling distans/Webbutveckling med .NET/moment4/Webbplats/backend/Admin/Views/Shared/_ActivityOutput.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9BY3Rpdml0eU91dHB1dC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Marco/Documents/Webbutveckling distans/Webbutveckling med .NET/moment4/Webbplats/backend/Admin/Views/Shared/_AdminMenu.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9BZG1pbk1lbnUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Marco/Documents/Webbutveckling distans/Webbutveckling med .NET/moment4/Webbplats/backend/Admin/Views/Shared/_Layout.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9MYXlvdXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Marco/Documents/Webbutveckling distans/Webbutveckling med .NET/moment4/Webbplats/backend/Admin/Views/Shared/_LoginPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9Mb2dpblBhcnRpYWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Marco/Documents/Webbutveckling distans/Webbutveckling med .NET/moment4/Webbplats/backend/Admin/Views/Shared/_Logout.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9Mb2dvdXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Marco/Documents/Webbutveckling distans/Webbutveckling med .NET/moment4/Webbplats/backend/Admin/Views/Shared/_NewsArticleOutput.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9OZXdzQXJ0aWNsZU91dHB1dC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Marco/Documents/Webbutveckling distans/Webbutveckling med .NET/moment4/Webbplats/backend/Admin/Views/Shared/_QuoteOutput.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9RdW90ZU91dHB1dC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Marco/Documents/Webbutveckling distans/Webbutveckling med .NET/moment4/Webbplats/backend/Admin/Views/Shared/_RandomQuote.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9SYW5kb21RdW90ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Marco/Documents/Webbutveckling distans/Webbutveckling med .NET/moment4/Webbplats/backend/Admin/Views/Shared/_ValidationScriptsPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Marco/Documents/Webbutveckling distans/Webbutveckling med .NET/moment4/Webbplats/backend/Admin/Views/User/Login.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlclxMb2dpbi5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Marco/Documents/Webbutveckling distans/Webbutveckling med .NET/moment4/Webbplats/backend/Admin/Views/_ViewImports.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Marco/Documents/Webbutveckling distans/Webbutveckling med .NET/moment4/Webbplats/backend/Admin/Views/_ViewStart.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdTdGFydC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 

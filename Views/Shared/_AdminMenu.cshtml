@@ -1,0 +1,68 @@
+﻿<!-- Admin-meny, partial -->
+<div id="admin-menu" class="gray-section">
+    <!-- Utloggning -->
+    <partial name="~/Views/Shared/_Logout.cshtml" />
+    <section>
+        <h1>Admin</h1>
+        <!-- Här väljer användaren vilken kategori som ska visas -->
+        <!-- Beroende på vilken sida/vy som visas (lagras i ViewData), visas en annan text och menyn skrivs ut med olika
+            tag helpers, aria-värden och klassnamn så att den "aktuella" knappen framhävs -->
+        @if (ViewData["Title"] == "Admin | Nyheter")
+        {
+            <p id="admin-text">
+                Här kan du lägga till, redigera och radera nyheter.
+                Klicka på <b>pennan</b> för att redigera. Klicka på <b>papperskorgen</b> för att radera.
+                Titeln ska vara <b>5 till 100 tecken lång</b>. Innehållet ska vara <b>300 till 1000 tecken långt</b>.
+                Ange <b>ditt eget namn eller en signatur</b> som författare. Namnet respektive
+                signaturen får vara <b>max 50 tecken långt</b>.
+            </p>
+            <div id="admin-menu-btn-wrapper">  
+                <div id="admin-news-btn" class="admin-menu-btn admin-menu-btn-active"><a asp-controller="NewsArticle" 
+                    asp-action="NewsArticle" aria-label="Visar formuläret för nyheter">Nyheter</a></div>
+                <div id="admin-activities-btn" class="admin-menu-btn admin-menu-btn-inactive"><a asp-controller="Activity" 
+                    asp-action="Activity" aria-label="Visar formuläret för aktiviteter">Aktiviteter</a></div>
+                <div id="admin-quotes-btn" class="admin-menu-btn admin-menu-btn-inactive"><a asp-controller="Quote" 
+                    asp-action="Quote" aria-label="Visar formuläret för citat">Citat</a></div>
+            </div>
+        }
+        else if (ViewData["Title"] == "Admin | Aktiviteter")
+        {
+            <p id="admin-text">
+                Här kan du lägga till, redigera och radera aktiviteter.
+                Klicka på <b>pennan</b> för att redigera. Klicka på <b>papperskorgen</b> för att radera.
+                Titeln ska vara <b>5 till 100 tecken lång</b>. Beskrivningen ska vara <b>100 till 1000 tecken lång</b>.
+                Akvtivitetens startdatum måste vara <b>minst en dag senare än dagens datum</b>. Slutdatum är inte obligatoriskt,
+                men om du anger ett slutdatum, måste det vara <b>minst en dag senare än startdatumet</b>.
+                Ange <b>ditt eget namn eller en signatur</b> som författare. Namnet respektive
+                signaturen får vara <b>max 50 tecken långt</b>.
+            </p>
+            <div id="admin-menu-btn-wrapper">  
+                <div id="admin-news-btn" class="admin-menu-btn admin-menu-btn-inactive"><a asp-controller="NewsArticle" 
+                    asp-action="NewsArticle" aria-label="Visar formuläret för nyheter">Nyheter</a></div>
+                <div id="admin-activities-btn" class="admin-menu-btn admin-menu-btn-active"><a asp-controller="Activity" 
+                    asp-action="Activity" aria-label="Visar formuläret för aktiviteter">Aktiviteter</a></div>
+                <div id="admin-quotes-btn" class="admin-menu-btn admin-menu-btn-inactive"><a asp-controller="Quote" 
+                    asp-action="Quote" aria-label="Visar formuläret för citat">Citat</a></div>
+            </div>
+        }
+        else if (ViewData["Title"] == "Admin | Citat")
+        {
+            <p id="admin-text">
+                Här kan du lägga till, redigera och radera de citat som visas under webbplatsens sidhuvud.
+                Klicka på <b>pennan</b> för att redigera. Klicka på <b>papperskorgen</b> för att radera.
+                Ett citat ska vara positivt och inspirerande och vara <b>20 till 100 tecken långt</b>.
+                <strong>Det är viktigt att du anger rätt upphovsperson.</strong> Om du inte hittar upphovspersonen, skriver du <b>Okänd</b>.
+                Om citatet är ditt, kan du ange <b>ditt eget namn eller en signatur</b>. Upphovspersonens namn respektive
+                signaturen får vara <b>max 50 tecken långt</b>.
+            </p>
+            <div id="admin-menu-btn-wrapper">  
+                <div id="admin-news-btn" class="admin-menu-btn admin-menu-btn-inactive"><a asp-controller="NewsArticle" 
+                    asp-action="NewsArticle" aria-label="Visar formuläret för nyheter">Nyheter</a></div>
+                <div id="admin-activities-btn" class="admin-menu-btn admin-menu-btn-inactive"><a asp-controller="Activity" 
+                    asp-action="Activity" aria-label="Visar formuläret för aktiviteter">Aktiviteter</a></div>
+                <div id="admin-quotes-btn" class="admin-menu-btn admin-menu-btn-active"><a asp-controller="Quote" 
+                    asp-action="Quote" aria-label="Visar formuläret för citat">Citat</a></div>
+            </div>
+        }
+    </section>
+</div>

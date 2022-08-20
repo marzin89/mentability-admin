@@ -1,0 +1,70 @@
+﻿<!-- Namnrymd -->
+@using Mentability.Models;
+
+<!-- Modell -->
+@model User;
+
+@{
+    // Sidans namn
+    ViewData["Title"] = "Logga in";
+}
+
+<!-- Slumpmässigt genererat citat -->
+<partial name="~/Views/Shared/_RandomQuote.cshtml" />
+
+<!-- Formulär med validering/felhantering -->
+<section class="gray-section">
+    <h1 id="h1-login">Logga in</h1>
+    <div class="white-section">
+        <form id="login-form" asp-controller="User" asp-action="Login" method="post">
+            <!-- Användarnamn -->
+            <label asp-for="Username"></label>
+            <input asp-for="Username" type="text" class="text-input username" aria-required="true" aria-describedby="username-error">
+            <span asp-validation-for="Username" id="username-error" class="error" role="alert"></span>
+            <!-- Lösenord -->
+            <label asp-for="Password"></label>
+            <input asp-for="Password" type="password" class="text-input password" aria-required="true" aria-describedby="password-error">
+            <span asp-validation-for="Password" id="password-error" class="error" role="alert"></span>
+            <div>
+                <button id="submit" type="submit" class="submit">Logga in</button>
+                <button type="reset" class="reset">Rensa</button>
+            </div>
+
+            <!-- Här skrivs ett felmeddelande ut om användaren har agett fel användarnamn och/eller lösenord.
+                Status lagras i ViewData i controllern -->
+            @if (ViewData["UserExists"] != null)
+            {
+                <p class="error" role="alert">Fel användarnamn eller lösenord</p>
+            }
+        </form>
+    </div>
+</section>
+
+<script>
+    // Denna kod markerar tomma, obligatoriska inmatningsfält och sätter aria-invalid till true
+    const submit   = document.getElementById('submit');
+    const username = document.getElementById('Username');
+    const password = document.getElementById('Password');
+
+    submit.addEventListener('click', validate);
+
+    function validate(e) {
+        if (!username.value) {
+            username.className = 'text-input-error';
+            username.setAttribute('aria-invalid', true);
+            
+        } else {
+            username.className = 'text-input';
+            username.setAttribute('aria-invalid', false);
+        }
+
+        if (!password.value) {
+            password.className = 'text-input-error';
+            password.setAttribute('aria-invalid', true);
+            
+        } else {
+            password.className = 'text-input';
+            password.setAttribute('aria-invalid', false);
+        }
+    }
+</script>

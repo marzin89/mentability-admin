@@ -1,0 +1,223 @@
+﻿<!-- Namnrymd -->
+@using Mentability.Models;
+
+<!-- Modell -->
+@model Quote;
+
+@{
+    // Sidans namn
+    ViewData["Title"] = "Admin | Citat";
+}
+
+<!-- Slumpmässigt genererat citat -->
+<partial name="~/Views/Shared/_RandomQuote.cshtml" />
+<!-- Huvudmeny Admin -->
+<partial name="~/Views/Shared/_AdminMenu.cshtml" />
+
+<!-- Formulär med validering/felhantering -->
+<div class="white-section">
+    <form id="admin-quotes-form" class="admin-form" asp-controller="Quote" asp-action="Create" method="post">
+        <!-- Upphovsperson -->
+        <label asp-for="Author"></label>
+        <input asp-for="Author" type="text" class="text-input quote-input" aria-required="true" aria-describedby="quote-author-error">
+        <span asp-validation-for="Author" id="quote-author-error" class="error" role="alert"></span>
+        <!-- Citat -->
+        <label asp-for="Content"></label>
+        <textarea asp-for="Content" class="text-input quote-input" aria-required="true" aria-describedby="quote-content-error"></textarea>
+        <span asp-validation-for="Content" id="quote-content-error" class="error" role="alert"></span>
+        <div>
+            <button id="submit-quote" type="submit" class="submit">Lägg till</button>
+            <button type="reset" class="reset">Rensa</button>
+        </div>
+
+         <!-- Här skrivs fel- och bekräftelsemeddelanden ut för lagring och borttagning.
+            Status lagras i ViewBag i controllern.-->
+        @if (ViewBag.Created != null)
+        {
+            if (ViewBag.Created)
+            {
+                <p class="confirm" role="alert">Citatet har lagts till</p>
+            }
+            else
+            {
+                <p class="error" role="alert">Ett serverfel har uppstått. Det gick inte att lägga till citatet.
+                    Försök igen senare.</p>
+            }
+        }
+
+        @if (ViewBag.Updated != null)
+        {
+            if (ViewBag.Updated == true)
+            {
+                <p class="confirm" role="alert">Citatet har uppdaterats</p>
+            }
+            else
+            {
+                <p class="error" role="alert">Ett serverfel har uppstått. Det gick inte att uppdatera citatet.
+                    Försök igen senare.</p>
+            }
+        }
+
+        @if (ViewBag.Deleted != null)
+        {
+            @if (ViewBag.Deleted)
+            {
+                <p class="confirm" role="alert">Citatet har raderats</p>
+            }
+            else
+            {
+                <p class="error" role="alert">Ett serverfel har uppstått. Det gick inte att radera citatet.
+                    Försök igen senare.</p>
+            }
+        }
+    </form>
+</div>
+
+<!-- Här skrivs befintliga poster ut med länkar för redigering och borttagning -->
+<div class="gray-section">
+    <section class="admin-output">
+        <h2 class="h2-admin-output">Citat</h2>
+            <!-- Kontrollerar att listan inte är tom -->
+            @if (Model != null)
+            {
+                // Aktiviteterna lagras i ViewBag så att de går att komma åt i partial-vyn
+                ViewBag.Quotes = Model.quotes;
+
+                /* Om antalet citat är högst tre, så skrivs de ut utan att partial-vyn används.
+                    Den enda skillnaden är villkoret i loopen (tre eller längden på listan). */
+                @if (Model.quotes.Count < 3)
+                {
+                    <div class="row">
+                        @for(int i = 0; i < Model.quotes.Count; i++)
+                        {
+                            <div class="quote">
+                                <p class="admin-text"><i>@Model.quotes[i].Content</i></p>
+                                <p class="author">@Model.quotes[i].Author</p>
+                                <div>
+                                    <p class="edit"><a asp-controller="EditQuote" asp-action="EditQuote" asp-route-id="@Model.quotes[i].Id" class="edit-link" 
+                                        aria-label="Öppnar formuläret för redigering">✎</a></p>
+                                    <p class="delete"><a asp-controller="Quote" asp-action="Delete" asp-route-id="@Model.quotes[i].Id" class="delete-link" 
+                                        aria-label="Raderar citatet">🗑</a></p>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                    }
+                    else if (Model.quotes.Count == 3)
+                    {
+                        <div class="row">
+                            @for(int i = 0; i < 3; i++)
+                            {
+                                <div class="quote">
+                                    <p class="admin-text"><i>@Model.quotes[i].Content</i></p>
+                                    <p class="author">@Model.quotes[i].Author</p>
+                                    <div>
+                                        <p class="edit"><a asp-controller="EditQuote" asp-action="EditQuote" asp-route-id="@Model.quotes[i].Id" class="edit-link" 
+                                            aria-label="Öppnar formuläret för redigering">✎</a></p>
+                                        <p class="delete"><a asp-controller="Quote" asp-action="Delete" asp-route-id="@Model.quotes[i].Id" class="delete-link" 
+                                            aria-label="Raderar citatet">🗑</a></p>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    }
+                    else
+                    {    /* Om det finns fler än tre citat, skrivs tre citat ut om användaren inte har valt "Visa fler" 
+                            (lagras i ViewBag i controllern) */
+                        if ((int)ViewBag.NumberOfQuotes == null)
+                        {
+                            @for(int i = 0; i < 3; i++)
+                            {
+                                <div class="quote">
+                                    <p class="admin-text"><i>@Model.quotes[i].Content</i></p>
+                                    <p class="author">@Model.quotes[i].Author</p>
+                                    <div>
+                                        <p class="edit"><a asp-controller="EditQuote" asp-action="EditQuote" asp-route-id="@Model.quotes[i].Id" class="edit-link" 
+                                            aria-label="Öppnar formuläret för redigering">✎</a></p>
+                                        <p class="delete"><a asp-controller="Quote" asp-action="Delete" asp-route-id="@Model.quotes[i].Id" class="delete-link" 
+                                            aria-label="Raderar citatet">🗑</a></p>
+                                    </div>
+                                </div>
+                            }
+                        }
+                        else
+                        {
+                            /* Om användaren har valt "Visa fler", används antalet kolumner (lagras i ViewBag i controllern) som villkor.
+                                Utskrift sker med hjälp av partial-vyn och index uppdateras inför varje iteration så att inga citat skrivs ut dubbelt. */
+                            int count = 0;
+                            int numberOfColumns = (int)ViewBag.NumberOfColumnsQuote;
+
+                            @for(int i = 0; i < numberOfColumns; i++)
+                            {
+                                ViewBag.QuoteIndex = count;
+                                <partial name="~/Views/Shared/_QuoteOutput.cshtml" />
+
+                                count += 3;
+                            }
+                        }                 
+                    }
+                }
+                // Om listan är tom, skrivs ett felmeddelande ut
+                else
+                {
+                    <p class="error" role="alert">Ett serverfel har uppstått. Det gick inte att hämta citat.
+                        Försök igen senare.</p>
+                }
+        <!-- Här väljer användaren att visa fler citat. Antalet poster i modellen skickas med som id
+            (antalet saknar dock betydelse) -->
+        <p class="show-more"><a asp-controller="Quote" asp-action="Quote" asp-route-id="@Model.quotes.Count" class="show-more-link">Visa fler</a></p>
+    </section>
+</div>
+
+<script>
+    // Denna kod markerar tomma, obligatoriska inmatningsfält, genererar felmeddelanden och sätter aria-invalid till true/false
+    // Inmatningsfält, felmeddelanden och skicka-knapp
+    const quoteInputs = document.getElementsByClassName('quote-input');
+    const errorMessages = document.getElementsByClassName('error');
+    const submitQuote = document.getElementById('submit-quote');
+
+    // När formuläret skickas, lagras alla inmatningar i webbläsaren samt att formuläret har skickats
+    submitQuote.addEventListener('click', () => {
+        sessionStorage.setItem('quoteSubmitted', true);
+        sessionStorage.setItem('quoteAuthor', quoteInputs[0].value);
+        sessionStorage.setItem('quoteContent', quoteInputs[1].value);
+    });
+
+    // Koden nedan körs när formuläret har skickats och sidan laddas om
+    window.addEventListener('load', () => {
+        if (sessionStorage.getItem('quoteSubmitted')) {
+            // Om inmatningsfältet är tomt, ändras klassnamnet, aria-invalid och ett felmeddelande genereras
+            if (!sessionStorage.getItem('quoteAuthor')) {
+                quoteInputs[0].className = 'text-input-error quote-input';
+                quoteInputs[0].setAttribute('aria-invalid', true);
+                errorMessages[0].innerHTML = 'Du måste ange en upphovsperson';
+
+            // Annars återställs aria-invalid och den lagrade upphovspersonen skrivs ut i inmatningsfältet
+            } else {
+                quoteInputs[0].setAttribute('aria-invalid', false);
+                quoteInputs[0].value = sessionStorage.getItem('quoteAuthor');
+            }
+
+            /* Om inmatningsfältet är tomt, eller om citatet är kortare än 20 tecken,
+                ändras klassnamnet, aria-invalid och ett felmeddelande genereras */
+            if (!sessionStorage.getItem('quoteContent')) {
+                quoteInputs[1].className = 'text-input-error quote-input';
+                quoteInputs[1].setAttribute('aria-invalid', true);
+                errorMessages[1].innerHTML = 'Du måste skriva ett citat';
+            
+            } else {
+                if (sessionStorage.getItem('quoteContent').length < 20) {
+                    quoteInputs[1].className = 'text-input-error quote-input';
+                    quoteInputs[1].setAttribute('aria-invalid', true);
+                    errorMessages[1].innerHTML = 'Citatet måste vara minst 20 tecken långt';
+                
+                // Annars återställs aria-invalid och det lagrade citatet skrivs ut i inmatningsfältet
+                } else {
+                    quoteInputs[1].setAttribute('aria-invalid', false);
+                    quoteInputs[1].value = sessionStorage.getItem('quoteContent');
+                }
+            }
+        }
+    })
+</script>
+

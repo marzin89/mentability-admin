@@ -1,0 +1,24 @@
+﻿<!-- Slumpmässigt citat, partial -->
+<div class="white-section">
+    <div id="quote-section">
+        <p id="quote">""</p> 
+        <p id="author">– </p>
+    </div>
+</div>
+
+<script>
+    // Hämtar citat och väljer ut ett citat baserat på ett slumpmässigt tal
+    const quote = document.getElementById('quote');
+    const author = document.getElementById('author');
+
+    fetch("https://localhost:7076/api/Quote")
+    .then((response) => response.json())
+    .then((data) => {
+        const min = 0;
+        const max = data.length;
+        const random = Math.floor(Math.random() * (max - min) + min);
+
+        quote.innerHTML = data[random].content;
+        author.innerHTML = data[random].author;
+    })
+</script>
